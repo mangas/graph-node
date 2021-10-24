@@ -977,7 +977,7 @@ async fn process_block<T: RuntimeHostBuilder<C>, C: Blockchain>(
         data_sources,
         deterministic_errors,
     ) {
-        Ok(_) => {
+        Ok(vid_map) => {
             // For subgraphs with `nonFatalErrors` feature disabled, we consider
             // any error as fatal.
             //
@@ -1004,6 +1004,10 @@ async fn process_block<T: RuntimeHostBuilder<C>, C: Blockchain>(
                 // just transacted so it will be already be set to unhealthy.
                 return Err(BlockProcessingError::Canceled);
             }
+
+            // Adjust the vids of cached entities because inserts and
+            // updates will have changed them
+            ctx.state.entity_lfu_cache.update_vids(vid_map);
 
             Ok((ctx, needs_restart))
         }
