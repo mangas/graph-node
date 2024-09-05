@@ -1719,10 +1719,27 @@ impl EthereumAdapterTrait for EthereumAdapter {
 
         let mut blocks: Vec<Arc<BlockPtrExt>> = blocks_map
             .into_iter()
-            .filter_map(|(_number, values)| {
+            .filter_map(|(number, values)| {
                 if values.len() == 1 {
-                    json::from_value(values[0].clone()).ok()
+                    match json::from_value(values[0].clone()) {
+                        Ok(block) => Some(block),
+                        Err(e) => {
+                            debug!(
+                                &logger,
+                                "Failed to parse block for block number: {:?}, Error: {:?}",
+                                number,
+                                e
+                            );
+                            None
+                        }
+                    }
                 } else {
+                    warn!(
+                        &logger,
+                        "Expected one block for block number {:?}, found {}",
+                        number,
+                        values.len()
+                    );
                     None
                 }
             })
@@ -1739,6 +1756,8 @@ impl EthereumAdapterTrait for EthereumAdapter {
                 "Loading {} block(s) not in the block cache",
                 missing_blocks.len()
             );
+
+            debug!(logger, "Missing blocks {:?}", missing_blocks);
         }
 
         Box::new(
