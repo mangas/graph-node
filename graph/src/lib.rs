@@ -32,6 +32,8 @@ pub mod endpoint;
 
 pub mod schema;
 
+pub mod pipeline;
+
 /// Helpers for parsing environment variables.
 pub mod env;
 
