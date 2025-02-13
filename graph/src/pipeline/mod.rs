@@ -2,9 +2,10 @@ use std::time::Duration;
 
 use crate::anyhow;
 use crate::prelude::async_trait;
-use crate::prelude::thiserror::Error;
 
 #[derive(Debug)]
+/// StepResult should be return by every step, it provides a way to control the pipeline lifecycle
+/// that may or may not be honored by the pipeline.
 pub enum StepResult<StepInput: Send>
 // where
 // StepInput: std::fmt::Debug,
@@ -17,6 +18,8 @@ pub enum StepResult<StepInput: Send>
 }
 
 #[async_trait]
+/// EventHandler is responsible for producing any and all side effects. The events should create
+/// a clear separation of what is needed in order for a side effect to occur.
 pub trait EventHandler: Sync + Send {
     type Event: Send;
     type EventOutput: Send;
@@ -25,6 +28,8 @@ pub trait EventHandler: Sync + Send {
 }
 
 #[async_trait]
+/// Each step should handle the input and produce a new input for the next step. The side effects
+/// should be offloaded to the handler.
 pub trait Step {
     type Input: Send;
     type Output: Send;
