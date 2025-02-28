@@ -702,6 +702,9 @@ impl Block for BlockFinality {
         // deal with that when deserializing
         //
         // see also 7736e440-4c6b-11ec-8c4d-b42e99f52061
+        if ENV_VARS.disable_block_cache {
+            return Ok(json::Value::Null);
+        }
         match self {
             BlockFinality::Final(block) => {
                 let eth_block = EthereumBlock {

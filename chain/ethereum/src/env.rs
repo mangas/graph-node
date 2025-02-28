@@ -91,6 +91,9 @@ pub struct EnvVars {
     /// This is a comma separated list of chain ids for which the gas field will not be set
     /// when calling `eth_call`.
     pub eth_call_no_gas: Vec<String>,
+    /// Set by the flag `GRAPH_ETHEREUM_DISABLE_BLOCK_CACHE`. Off by default.
+    /// Reduces the data stored on the block cache, saving considerable amounts of space when using rpc.
+    pub disable_block_cache: bool,
 }
 
 // This does not print any values avoid accidentally leaking any sensitive env vars
@@ -141,6 +144,7 @@ impl From<Inner> for EnvVars {
                 .filter(|s| !s.is_empty())
                 .map(str::to_string)
                 .collect(),
+            disable_block_cache: x.disable_block_cache.0,
         }
     }
 }
@@ -192,4 +196,6 @@ struct Inner {
     genesis_block_number: u64,
     #[envconfig(from = "GRAPH_ETH_CALL_NO_GAS", default = "421613,421614")]
     eth_call_no_gas: String,
+    #[envconfig(from = "GRAPH_ETHEREUM_DISABLE_BLOCK_CACHE", default = "false")]
+    disable_block_cache: EnvVarBoolean,
 }
