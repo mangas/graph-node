@@ -53,9 +53,9 @@ pub struct Pipeline<StepInput, EventHandler>
 // where
 // StepInput: std::fmt::Debug,
 {
-    source: Box<dyn Source<Output = StepInput>>,
-    steps: Vec<Box<dyn Step<Input = StepInput, Output = StepInput, Handler = EventHandler>>>,
-    handler: EventHandler,
+    pub source: Box<dyn Source<Output = StepInput>>,
+    pub steps: Vec<Box<dyn Step<Input = StepInput, Output = StepInput, Handler = EventHandler>>>,
+    pub handler: EventHandler,
     // async fn handle_event(evt: Self::Event) -> anyhow::Result<()>;
 }
 

@@ -3,6 +3,7 @@ mod error;
 mod inputs;
 mod instance_manager;
 mod loader;
+mod pipeline;
 mod provider;
 mod registrar;
 mod runner;
