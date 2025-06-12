@@ -641,8 +641,6 @@ pub trait TriggersAdapter<C: Blockchain>: Send + Sync {
     /// Get pointer to parent of `block`. This is called when reverting `block`.
     async fn chain_head_ptr(&self) -> Result<Option<BlockPtr>, Error>;
 
-    async fn load_block_by_hash(&self, block_hash: &BlockHash) -> Result<Option<C::Block>>;
-
     async fn load_block_ptrs_by_numbers(
         &self,
         logger: Logger,

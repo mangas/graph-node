@@ -985,7 +985,7 @@ impl<C: Blockchain> TriggersAdapter<C> for MockTriggersAdapter<C> {
         _ptr: BlockPtr,
         _offset: BlockNumber,
         _root: Option<BlockHash>,
-    ) -> Result<Option<ExtendedBlockPtr>, Error> {
+    ) -> Result<Option<(ExtendedBlockPtr, Option<C::Block>)>, Error> {
         todo!()
     }
 

@@ -2877,8 +2877,6 @@ impl ChainStoreTrait for ChainStore {
 }
 
 mod recent_blocks_cache {
-    use serde_json::Value;
-
     use super::*;
     use std::collections::BTreeMap;
 

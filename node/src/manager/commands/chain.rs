@@ -119,7 +119,7 @@ pub async fn info(
         None => None,
         Some(head_block) => {
             chain_store
-                .ancestor_block(head_block.clone(), offset, None)
+                .ancestor_block_ptr(head_block.clone(), offset, None)
                 .await?
         }
     };

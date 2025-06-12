@@ -132,9 +132,10 @@ impl blockchain::TriggersAdapter<Chain> for TriggersAdapter {
         _ptr: BlockPtr,
         _offset: BlockNumber,
         _root: Option<BlockHash>,
-    ) -> Result<Option<ExtendedBlockPtr>, Error> {
+    ) -> Result<Option<(ExtendedBlockPtr, Option<Block>)>, Error> {
         unimplemented!()
     }
+
     async fn load_block_by_hash(&self, _block_hash: &BlockHash) -> Result<Option<Block>, Error> {
         unimplemented!()
     }

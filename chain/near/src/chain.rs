@@ -412,7 +412,7 @@ impl TriggersAdapterTrait<Chain> for TriggersAdapter {
         _ptr: BlockPtr,
         _offset: BlockNumber,
         _root: Option<BlockHash>,
-    ) -> Result<Option<ExtendedBlockPtr>, Error> {
+    ) -> Result<Option<(ExtendedBlockPtr, Option<Block>)>, Error> {
         panic!("Should never be called since FirehoseBlockStream cannot resolve it")
     }
 
